@@ -5,8 +5,12 @@ const AboutExpert = ({ onCTA }: { onCTA: () => void }) => (
   <section id="about" className="py-20 sm:py-28 px-4 bg-secondary/30" aria-label="About the expert">
     <div className="container mx-auto max-w-4xl">
       <div className="flex flex-col md:flex-row items-center gap-10">
-        <div className="w-40 h-40 sm:w-52 sm:h-52 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center shrink-0 border-4 border-primary/30">
-          <span className="text-5xl sm:text-6xl font-bold font-serif text-primary-foreground">NV</span>
+        <div className="w-40 h-40 sm:w-52 sm:h-52 rounded-full overflow-hidden shrink-0 border-4 border-primary/30 shadow-xl">
+          <img 
+            src="/jyotishi.png" 
+            alt="Numerology Expert" 
+            className="w-full h-full object-cover"
+          />
         </div>
         <div className="text-center md:text-left">
           <h2 className="text-2xl sm:text-3xl font-bold font-serif">
