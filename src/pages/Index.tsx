@@ -1,4 +1,5 @@
 import { useState } from "react";
+import StickyNavbar from "@/components/StickyNavbar";
 import HeroSection from "@/components/HeroSection";
 import PainPointSection from "@/components/PainPointSection";
 import FreeReportSection from "@/components/FreeReportSection";
@@ -16,6 +17,7 @@ const Index = () => {
 
   return (
     <>
+      <StickyNavbar onCTA={openPopup} />
       <main>
         <HeroSection onCTA={openPopup} />
         <PainPointSection onCTA={openPopup} />

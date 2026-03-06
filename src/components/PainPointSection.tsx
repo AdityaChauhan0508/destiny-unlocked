@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Sparkles } from "lucide-react";
 
 const PainPointSection = ({ onCTA }: { onCTA: () => void }) => (
-  <section className="py-20 sm:py-28 px-4" aria-label="Why you need numerology">
+  <section id="pain-points" className="py-20 sm:py-28 px-4" aria-label="Why you need numerology">
     <div className="container mx-auto max-w-3xl text-center">
       <h2 className="text-2xl sm:text-4xl font-bold font-serif fade-in-up">
         Clarity Chahiye? Answers Chahiye?{" "}

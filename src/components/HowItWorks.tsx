@@ -1,5 +1,5 @@
 const HowItWorks = () => (
-  <section className="py-20 sm:py-28 px-4" aria-label="How numerology works">
+  <section id="how-it-works" className="py-20 sm:py-28 px-4" aria-label="How numerology works">
     <div className="container mx-auto max-w-3xl text-center">
       <h2 className="text-2xl sm:text-4xl font-bold font-serif">
         How <span className="gradient-text">Numerology</span> Works
