@@ -28,18 +28,19 @@ const LeadPopup = ({ open, onOpenChange }: LeadPopupProps) => {
     name: "",
     phone: "",
     email: "",
+    dob: "",
     why: "",
   });
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!form.name || !form.email || !form.phone || !form.why) {
+    if (!form.name || !form.email || !form.phone || !form.dob || !form.why) {
       toast({ title: "Please fill all fields", variant: "destructive" });
       return;
     }
     toast({ title: "🎉 Request Submitted!", description: "Your free numerology report is on the way!" });
     onOpenChange(false);
-    setForm({ name: "", phone: "", email: "", why: "" });
+    setForm({ name: "", phone: "", email: "", dob: "", why: "" });
   };
 
   return (
@@ -65,6 +66,10 @@ const LeadPopup = ({ open, onOpenChange }: LeadPopupProps) => {
           <div className="space-y-1.5">
             <Label htmlFor="email">Email</Label>
             <Input id="email" type="email" placeholder="you@email.com" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} className="bg-muted border-border" />
+          </div>
+          <div className="space-y-1.5">
+            <Label htmlFor="dob">Date of Birth</Label>
+            <Input id="dob" type="date" value={form.dob} onChange={(e) => setForm({ ...form, dob: e.target.value })} className="bg-muted border-border" />
           </div>
           <div className="space-y-1.5">
             <Label>Why do you need this report?</Label>
