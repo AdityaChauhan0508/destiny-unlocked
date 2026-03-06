@@ -35,7 +35,7 @@ const StickyNavbar = ({ onCTA }: StickyNavbarProps) => {
       
       <div className="container mx-auto flex items-center justify-between h-16 px-4">
         <a href="#" className="flex items-center gap-2 font-serif text-xl font-bold gradient-text">
-          <img src={logo} alt="NumeroVibe logo" className="w-8 h-8" />
+          <img src={logo} alt="NumeroVibe logo" className="w-10 h-10" />
           NumeroVibe
         </a>
 
