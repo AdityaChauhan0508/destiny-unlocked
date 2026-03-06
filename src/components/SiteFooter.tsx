@@ -1,11 +1,11 @@
 import { Instagram, Facebook, Youtube, Mail, Phone } from "lucide-react";
 
-const SiteFooter = () => (
-  <footer className="py-12 px-4 border-t border-border/50 bg-secondary/20" aria-label="Footer">
+const SiteFooter = () =>
+<footer className="py-12 px-4 border-t border-border/50 bg-secondary/20" aria-label="Footer">
     <div className="container mx-auto max-w-6xl">
       <div className="grid sm:grid-cols-3 gap-8 text-center sm:text-left">
         <div>
-          <h3 className="font-bold font-serif text-lg gradient-text">Vivek Mishra Numerology</h3>
+          <h3 className="font-bold font-serif text-lg gradient-text"> Numerology</h3>
           <p className="text-sm text-muted-foreground mt-2">
             Helping you decode your destiny through the power of numbers.
           </p>
@@ -24,11 +24,11 @@ const SiteFooter = () => (
         <div>
           <h4 className="font-semibold text-foreground mb-3">Follow Us</h4>
           <div className="flex justify-center sm:justify-start gap-4">
-            {[Instagram, Facebook, Youtube].map((Icon, i) => (
-              <a key={i} href="#" className="text-muted-foreground hover:text-accent transition-colors" aria-label="Social media link">
+            {[Instagram, Facebook, Youtube].map((Icon, i) =>
+          <a key={i} href="#" className="text-muted-foreground hover:text-accent transition-colors" aria-label="Social media link">
                 <Icon className="w-5 h-5" />
               </a>
-            ))}
+          )}
           </div>
         </div>
       </div>
@@ -37,7 +37,7 @@ const SiteFooter = () => (
         <p>© {new Date().getFullYear()} Numerology. All rights reserved.</p>
       </div>
     </div>
-  </footer>
-);
+  </footer>;
+
 
 export default SiteFooter;
