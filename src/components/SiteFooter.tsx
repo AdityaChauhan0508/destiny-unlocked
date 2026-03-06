@@ -13,8 +13,8 @@ const SiteFooter = () => (
         <div>
           <h4 className="font-semibold text-foreground mb-3">Contact</h4>
           <div className="space-y-2 text-sm text-muted-foreground">
-            <a href="mailto:hello@viveknumerology.com" className="flex items-center justify-center sm:justify-start gap-2 hover:text-accent transition-colors">
-              <Mail className="w-4 h-4" /> hello@viveknumerology.com
+            <a href="mailto:hello@numerology.com" className="flex items-center justify-center sm:justify-start gap-2 hover:text-accent transition-colors">
+              <Mail className="w-4 h-4" /> hello@numerology.com
             </a>
             <a href="tel:+919999999999" className="flex items-center justify-center sm:justify-start gap-2 hover:text-accent transition-colors">
               <Phone className="w-4 h-4" /> +91 99999 99999
@@ -34,7 +34,7 @@ const SiteFooter = () => (
       </div>
       <div className="mt-10 pt-6 border-t border-border/30 text-center text-xs text-muted-foreground space-y-1">
         <p>Disclaimer: Numerology is for guidance purposes only. Results may vary.</p>
-        <p>© {new Date().getFullYear()} Vivek Mishra Numerology. All rights reserved.</p>
+        <p>© {new Date().getFullYear()} Numerology. All rights reserved.</p>
       </div>
     </div>
   </footer>
