@@ -32,15 +32,38 @@ const LeadPopup = ({ open, onOpenChange }: LeadPopupProps) => {
     why: "",
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!form.name || !form.email || !form.phone || !form.dob || !form.why) {
       toast({ title: "Please fill all fields", variant: "destructive" });
       return;
     }
-    toast({ title: "🎉 Request Submitted!", description: "Your free numerology report is on the way!" });
-    onOpenChange(false);
-    setForm({ name: "", phone: "", email: "", dob: "", why: "" });
+
+    try {
+      const response = await fetch("https://connect.pabbly.com/workflow/sendwebhookdata/IjU3NjcwNTZmMDYzNzA0M2M1MjZiNTUzMzUxMzQi_pc", {
+        method: "POST",
+        body: JSON.stringify({
+          ...form,
+          source: "Lead Popup",
+          submittedAt: new Date().toISOString(),
+        }),
+      });
+
+      if (response.ok) {
+        toast({ title: "🎉 Request Submitted!", description: "Your free numerology report is on the way!" });
+        onOpenChange(false);
+        setForm({ name: "", phone: "", email: "", dob: "", why: "" });
+      } else {
+        throw new Error("Failed to submit");
+      }
+    } catch (error) {
+      console.error("Webhook submission error:", error);
+      toast({ 
+        title: "Submission failed", 
+        description: "Please try again later or contact support.",
+        variant: "destructive" 
+      });
+    }
   };
 
   return (
