@@ -29,7 +29,6 @@ const LeadPopup = ({ open, onOpenChange }: LeadPopupProps) => {
     phone: "",
     email: "",
     why: "",
-    color: "#4B2E83",
   });
 
   const handleSubmit = (e: React.FormEvent) => {
