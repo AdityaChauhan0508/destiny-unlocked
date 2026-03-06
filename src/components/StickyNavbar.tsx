@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Sparkles, Menu, X } from "lucide-react";
+import logo from "@/assets/logo.png";
 
 interface StickyNavbarProps {
   onCTA: () => void;
@@ -33,8 +34,9 @@ const StickyNavbar = ({ onCTA }: StickyNavbarProps) => {
       }>
       
       <div className="container mx-auto flex items-center justify-between h-16 px-4">
-        <a href="#" className="font-serif text-xl font-bold gradient-text">
-          Numerology
+        <a href="#" className="flex items-center gap-2 font-serif text-xl font-bold gradient-text">
+          <img src={logo} alt="NumeroVibe logo" className="w-8 h-8" />
+          NumeroVibe
         </a>
 
         {/* Desktop nav */}
