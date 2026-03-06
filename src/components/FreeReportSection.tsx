@@ -15,7 +15,7 @@ const insights = [
 ];
 
 const FreeReportSection = ({ onCTA }: { onCTA: () => void }) => (
-  <section className="py-20 sm:py-28 px-4 bg-secondary/30" aria-label="What you get">
+  <section id="free-report" className="py-20 sm:py-28 px-4 bg-secondary/30" aria-label="What you get">
     <div className="container mx-auto max-w-5xl text-center">
       <h2 className="text-2xl sm:text-4xl font-bold font-serif">
         Your Free Report Includes <span className="gradient-text">10 Powerful Insights</span>

@@ -10,7 +10,7 @@ const testimonials = [
 ];
 
 const Testimonials = () => (
-  <section className="py-20 sm:py-28 px-4" aria-label="Testimonials">
+  <section id="testimonials" className="py-20 sm:py-28 px-4" aria-label="Testimonials">
     <div className="container mx-auto max-w-6xl text-center">
       <h2 className="text-2xl sm:text-4xl font-bold font-serif">
         What People Are <span className="gradient-text">Saying</span>

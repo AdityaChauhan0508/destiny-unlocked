@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Sparkles, Award, BookOpen, Users } from "lucide-react";
 
 const AboutExpert = ({ onCTA }: { onCTA: () => void }) => (
-  <section className="py-20 sm:py-28 px-4 bg-secondary/30" aria-label="About the expert">
+  <section id="about" className="py-20 sm:py-28 px-4 bg-secondary/30" aria-label="About the expert">
     <div className="container mx-auto max-w-4xl">
       <div className="flex flex-col md:flex-row items-center gap-10">
         <div className="w-40 h-40 sm:w-52 sm:h-52 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center shrink-0 border-4 border-primary/30">
