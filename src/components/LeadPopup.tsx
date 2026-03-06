@@ -39,7 +39,7 @@ const LeadPopup = ({ open, onOpenChange }: LeadPopupProps) => {
     }
     toast({ title: "🎉 Request Submitted!", description: "Your free numerology report is on the way!" });
     onOpenChange(false);
-    setForm({ name: "", phone: "", email: "", why: "", color: "#4B2E83" });
+    setForm({ name: "", phone: "", email: "", why: "" });
   };
 
   return (
@@ -78,13 +78,6 @@ const LeadPopup = ({ open, onOpenChange }: LeadPopupProps) => {
                 ))}
               </SelectContent>
             </Select>
-          </div>
-          <div className="space-y-1.5">
-            <Label htmlFor="color">Select Your Favourite Color</Label>
-            <div className="flex items-center gap-3">
-              <input type="color" id="color" value={form.color} onChange={(e) => setForm({ ...form, color: e.target.value })} className="w-10 h-10 rounded-lg cursor-pointer border border-border bg-transparent" />
-              <span className="text-sm text-muted-foreground">{form.color}</span>
-            </div>
           </div>
           <Button type="submit" className="w-full glow-button bg-primary hover:bg-accent text-primary-foreground font-semibold text-base py-5">
             <Sparkles className="w-4 h-4 mr-2" />
