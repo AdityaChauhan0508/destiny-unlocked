@@ -210,7 +210,7 @@ function ShareButtons({ insight, name }: { insight: string; name: string }) {
   const [copied, setCopied] = useState(false);
   const plainText = insight.replace(/[#*\-_`]/g, "").replace(/\n{2,}/g, "\n").trim();
   const shareText = `✨ My Numerology Insight from NumeroVibe Destiny ✨\n\n${plainText.slice(0, 500)}${plainText.length > 500 ? "..." : ""}`;
-  const shareUrl = "https://numerology-destiny.lovable.app";
+  const shareUrl = "https://numerovibe-destiny.vercel.app/";
   const encoded = encodeURIComponent(shareText + "\n\n" + shareUrl);
 
   const handleCopy = async () => {
