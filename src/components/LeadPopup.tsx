@@ -4,7 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
-import { Sparkles, Loader2 } from "lucide-react";
+import { Sparkles, Loader2, Share2, MessageCircle, Facebook, Twitter, Copy, Check } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
 const WHY_OPTIONS = [
