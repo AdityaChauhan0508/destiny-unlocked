@@ -4,7 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
-import { Sparkles, Loader2 } from "lucide-react";
+import { Sparkles, Loader2, Share2, MessageCircle, Facebook, Twitter, Copy, Check } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
 const WHY_OPTIONS = [
@@ -122,9 +122,10 @@ const LeadPopup = ({ open, onOpenChange }: LeadPopupProps) => {
           <div className="prose prose-invert prose-sm max-w-none mt-2 text-foreground/90 leading-relaxed animate-fade-in">
             <div dangerouslySetInnerHTML={{ __html: formatMarkdown(insight) }} />
           </div>
+          <ShareButtons insight={insight} name={form.name} />
           <Button
             onClick={() => handleClose(false)}
-            className="w-full mt-4 glow-button bg-primary hover:bg-accent text-primary-foreground font-semibold"
+            className="w-full mt-2 glow-button bg-primary hover:bg-accent text-primary-foreground font-semibold"
           >
             Close
           </Button>
@@ -203,6 +204,44 @@ const LeadPopup = ({ open, onOpenChange }: LeadPopupProps) => {
     </Dialog>
   );
 };
+
+// Share buttons component
+function ShareButtons({ insight, name }: { insight: string; name: string }) {
+  const [copied, setCopied] = useState(false);
+  const plainText = insight.replace(/[#*\-_`]/g, "").replace(/\n{2,}/g, "\n").trim();
+  const shareText = `✨ My Numerology Insight from NumeroVibe Destiny ✨\n\n${plainText.slice(0, 500)}${plainText.length > 500 ? "..." : ""}`;
+  const shareUrl = "https://numerology-destiny.lovable.app";
+  const encoded = encodeURIComponent(shareText + "\n\n" + shareUrl);
+
+  const handleCopy = async () => {
+    await navigator.clipboard.writeText(shareText + "\n\n" + shareUrl);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
+  return (
+    <div className="mt-4 space-y-2">
+      <p className="text-xs text-muted-foreground text-center flex items-center justify-center gap-1">
+        <Share2 className="w-3 h-3" /> Share your insight
+      </p>
+      <div className="flex gap-2 justify-center">
+        <Button size="sm" variant="outline" className="gap-1.5" onClick={() => window.open(`https://wa.me/?text=${encoded}`, "_blank")}>
+          <MessageCircle className="w-4 h-4" /> WhatsApp
+        </Button>
+        <Button size="sm" variant="outline" className="gap-1.5" onClick={() => window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText.slice(0, 250))}&url=${encodeURIComponent(shareUrl)}`, "_blank")}>
+          <Twitter className="w-4 h-4" /> X
+        </Button>
+        <Button size="sm" variant="outline" className="gap-1.5" onClick={() => window.open(`https://www.facebook.com/sharer/sharer.php?quote=${encoded}&u=${encodeURIComponent(shareUrl)}`, "_blank")}>
+          <Facebook className="w-4 h-4" /> Facebook
+        </Button>
+        <Button size="sm" variant="outline" className="gap-1.5" onClick={handleCopy}>
+          {copied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
+          {copied ? "Copied!" : "Copy"}
+        </Button>
+      </div>
+    </div>
+  );
+}
 
 // Simple markdown to HTML converter
 function formatMarkdown(md: string): string {
