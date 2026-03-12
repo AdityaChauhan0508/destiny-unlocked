@@ -122,9 +122,10 @@ const LeadPopup = ({ open, onOpenChange }: LeadPopupProps) => {
           <div className="prose prose-invert prose-sm max-w-none mt-2 text-foreground/90 leading-relaxed animate-fade-in">
             <div dangerouslySetInnerHTML={{ __html: formatMarkdown(insight) }} />
           </div>
+          <ShareButtons insight={insight} name={form.name} />
           <Button
             onClick={() => handleClose(false)}
-            className="w-full mt-4 glow-button bg-primary hover:bg-accent text-primary-foreground font-semibold"
+            className="w-full mt-2 glow-button bg-primary hover:bg-accent text-primary-foreground font-semibold"
           >
             Close
           </Button>
