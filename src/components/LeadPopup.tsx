@@ -4,7 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
-import { Sparkles } from "lucide-react";
+import { Sparkles, Loader2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
 const WHY_OPTIONS = [
@@ -31,6 +31,8 @@ const LeadPopup = ({ open, onOpenChange }: LeadPopupProps) => {
     dob: "",
     why: "",
   });
+  const [insightLoading, setInsightLoading] = useState(false);
+  const [insight, setInsight] = useState<string | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -40,6 +42,7 @@ const LeadPopup = ({ open, onOpenChange }: LeadPopupProps) => {
     }
 
     try {
+      // Submit to Pabbly webhook
       const response = await fetch("https://connect.pabbly.com/workflow/sendwebhookdata/IjU3NjcwNTZmMDYzNzA0M2M1MjZiNTUzMzUxMzQi_pc", {
         method: "POST",
         body: JSON.stringify({
@@ -49,25 +52,109 @@ const LeadPopup = ({ open, onOpenChange }: LeadPopupProps) => {
         }),
       });
 
-      if (response.ok) {
-        toast({ title: "🎉 Request Submitted!", description: "Your free numerology report is on the way!" });
-        onOpenChange(false);
-        setForm({ name: "", phone: "", email: "", dob: "", why: "" });
-      } else {
-        throw new Error("Failed to submit");
+      if (!response.ok) throw new Error("Failed to submit");
+
+      toast({ title: "🎉 Request Submitted!", description: "Generating your personalized insight..." });
+
+      // Generate AI insight
+      setInsightLoading(true);
+      try {
+        const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
+        const SUPABASE_KEY = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
+        const aiRes = await fetch(`${SUPABASE_URL}/functions/v1/numerology-insight`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${SUPABASE_KEY}`,
+          },
+          body: JSON.stringify({
+            fullName: form.name,
+            dob: form.dob,
+            reason: form.why,
+          }),
+        });
+
+        if (aiRes.ok) {
+          const data = await aiRes.json();
+          setInsight(data.insight);
+        } else {
+          setInsight(null);
+          toast({
+            title: "Insight generation delayed",
+            description: "Your insight is being prepared. Please check back shortly.",
+          });
+        }
+      } catch {
+        setInsight(null);
+      } finally {
+        setInsightLoading(false);
       }
     } catch (error) {
-      console.error("Webhook submission error:", error);
-      toast({ 
-        title: "Submission failed", 
+      console.error("Submission error:", error);
+      toast({
+        title: "Submission failed",
         description: "Please try again later or contact support.",
-        variant: "destructive" 
+        variant: "destructive",
       });
     }
   };
 
+  const handleClose = (isOpen: boolean) => {
+    if (!isOpen) {
+      setInsight(null);
+      setInsightLoading(false);
+      setForm({ name: "", phone: "", email: "", dob: "", why: "" });
+    }
+    onOpenChange(isOpen);
+  };
+
+  // Insight result view
+  if (insight) {
+    return (
+      <Dialog open={open} onOpenChange={handleClose}>
+        <DialogContent className="sm:max-w-lg border-primary/30 bg-card max-h-[85vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle className="text-xl sm:text-2xl font-bold text-center gradient-text font-serif flex items-center justify-center gap-2">
+              <Sparkles className="w-5 h-5 text-accent" />
+              Your Personalized Insight
+            </DialogTitle>
+          </DialogHeader>
+          <div className="prose prose-invert prose-sm max-w-none mt-2 text-foreground/90 leading-relaxed animate-fade-in">
+            <div dangerouslySetInnerHTML={{ __html: formatMarkdown(insight) }} />
+          </div>
+          <Button
+            onClick={() => handleClose(false)}
+            className="w-full mt-4 glow-button bg-primary hover:bg-accent text-primary-foreground font-semibold"
+          >
+            Close
+          </Button>
+        </DialogContent>
+      </Dialog>
+    );
+  }
+
+  // Loading view
+  if (insightLoading) {
+    return (
+      <Dialog open={open} onOpenChange={handleClose}>
+        <DialogContent className="sm:max-w-md border-primary/30 bg-card">
+          <div className="flex flex-col items-center justify-center py-12 gap-4">
+            <Loader2 className="w-10 h-10 text-accent animate-spin" />
+            <p className="text-foreground/80 text-lg font-serif animate-pulse">
+              Generating your insight...
+            </p>
+            <p className="text-muted-foreground text-sm text-center">
+              Our AI is crafting personalized numerology guidance just for you
+            </p>
+          </div>
+        </DialogContent>
+      </Dialog>
+    );
+  }
+
+  // Form view
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
+    <Dialog open={open} onOpenChange={handleClose}>
       <DialogContent className="sm:max-w-md border-primary/30 bg-card">
         <DialogHeader>
           <DialogTitle className="text-xl sm:text-2xl font-bold text-center gradient-text font-serif">
@@ -116,5 +203,17 @@ const LeadPopup = ({ open, onOpenChange }: LeadPopupProps) => {
     </Dialog>
   );
 };
+
+// Simple markdown to HTML converter
+function formatMarkdown(md: string): string {
+  return md
+    .replace(/### (.*)/g, '<h3 class="text-accent font-serif text-lg font-semibold mt-4 mb-2">$1</h3>')
+    .replace(/## (.*)/g, '<h2 class="text-accent font-serif text-xl font-bold mt-5 mb-2">$1</h2>')
+    .replace(/\*\*(.*?)\*\*/g, '<strong class="text-foreground">$1</strong>')
+    .replace(/^\- (.*)/gm, '<li class="ml-4 list-disc text-foreground/80">$1</li>')
+    .replace(/^\d+\. (.*)/gm, '<li class="ml-4 list-decimal text-foreground/80">$1</li>')
+    .replace(/\n\n/g, '<br/><br/>')
+    .replace(/\n/g, '<br/>');
+}
 
 export default LeadPopup;
